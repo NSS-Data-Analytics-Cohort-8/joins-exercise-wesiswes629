@@ -84,3 +84,18 @@ ORDER BY r.imdb_rating DESC;
 -- Answer:  Dirting Dancing, distributed by Vestron Pictures out of Chicago, Illinois.
 
 -- 7. Which have a higher average rating, movies which are over two hours long or movies which are under two hours?
+
+SELECT t1.rating, t1.under_2, t2.over_2
+	FROM (SELECT mpaa_rating AS rating, 
+	COUNT(length_in_min) AS under_2
+FROM specs
+WHERE length_in_min <120
+GROUP BY rating) AS t1,
+(SELECT mpaa_rating AS rating, 
+	COUNT(length_in_min) AS over_2
+FROM specs
+WHERE length_in_min > 120
+GROUP BY rating) AS t2
+WHERE t1.rating = t2.rating;
+
+-- Answer: Movies over 120 minutes tended to have a higher rating than movies under 120 minutes.  Average rating for 2+ hours was PG-13, for -2 hours it was PG.
