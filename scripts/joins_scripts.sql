@@ -8,11 +8,22 @@ SELECT s.film_title AS name,
 FROM specs AS s 
 INNER JOIN revenue AS r
 	USING (movie_id)
-	ORDER BY lowest_grossing;
+	ORDER BY lowest_grossing
+	LIMIT 1;
 
 -- Answer:  Semi-Tough, released 1977, grossed $37,187,139
 
 -- 2. What year has the highest average imdb rating?
+
+SELECT s.release_year AS year, 
+	AVG(r.imdb_rating) AS avg_rating
+FROM specs AS s
+INNER JOIN rating AS r
+	USING (movie_id) 
+GROUP BY year
+ORDER BY avg_rating DESC
+LIMIT 1;
+	
 
 -- 3. What is the highest grossing G-rated movie? Which company distributed it?
 
