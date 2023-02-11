@@ -65,6 +65,22 @@ GROUP BY distributor,dist_id
 ORDER BY avg_budget DESC
 LIMIT 5;
 
+-- Answer: Ranked in Order--Walt Disney, Sony Pictures, Lionsgate, DreamWorks, and Warner Bros.
+
 -- 6. How many movies in the dataset are distributed by a company which is not headquartered in California? Which of these movies has the highest imdb rating?
+
+SELECT d.company_name AS distributors,
+	d.headquarters AS headquarters, 
+	s.film_title AS title,
+	r.imdb_rating
+FROM specs AS s
+INNER JOIN rating AS r
+	USING (movie_id)
+INNER JOIN distributors AS d
+	ON d.distributor_id = s.domestic_distributor_id
+	WHERE headquarters NOT LIKE '%CA'
+ORDER BY r.imdb_rating DESC;
+
+-- Answer:  Dirting Dancing, distributed by Vestron Pictures out of Chicago, Illinois.
 
 -- 7. Which have a higher average rating, movies which are over two hours long or movies which are under two hours?
